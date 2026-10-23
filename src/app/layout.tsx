@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
+import CookieBanner from '@/components/CookieBanner'
 import { getLojas, getSiteConfig, getRodape } from '@/lib/contentStore'
 
 export const dynamic = 'force-dynamic'
@@ -57,6 +58,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <div className="flex-1">{children}</div>
         <Footer siteConfig={siteConfig} rodape={rodape} />
         <AnimateOnScroll />
+        <CookieBanner />
       </body>
     </html>
   )
