@@ -74,21 +74,47 @@ const defaultRodape: Rodape = {
 
 const KV_KEY = 'sabenauto:content'
 
-function hasKv() {
-  return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
+function getUpstash() {
+  // Suporta Vercel KV (KV_REST_API_*) e Upstash direto (UPSTASH_REDIS_REST_*)
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN
+  return url && token ? { url, token } : null
+}
+
+async function upstashGet<T>(key: string): Promise<T | null> {
+  const creds = getUpstash()
+  if (!creds) return null
+  try {
+    const res = await fetch(`${creds.url}/get/${encodeURIComponent(key)}`, {
+      headers: { Authorization: `Bearer ${creds.token}` },
+      cache: 'no-store',
+    })
+    const json = await res.json() as { result: string | null }
+    if (!json.result) return null
+    return JSON.parse(json.result) as T
+  } catch {
+    return null
+  }
+}
+
+async function upstashSet(key: string, value: unknown): Promise<void> {
+  const creds = getUpstash()
+  if (!creds) return
+  await fetch(`${creds.url}/set/${encodeURIComponent(key)}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${creds.token}`,
+      'Content-Type': 'text/plain',
+    },
+    body: JSON.stringify(value),
+  })
 }
 
 async function read(): Promise<StoredContent> {
-  if (hasKv()) {
-    try {
-      const { kv } = await import('@vercel/kv')
-      const data = await kv.get<StoredContent>(KV_KEY)
-      return data ?? {}
-    } catch {
-      return {}
-    }
-  }
-  // Local dev: file-based
+  const kv = await upstashGet<StoredContent>(KV_KEY)
+  if (kv) return kv
+
+  // Local dev: file-based fallback
   try {
     const fs = await import('fs')
     const path = await import('path')
@@ -101,12 +127,11 @@ async function read(): Promise<StoredContent> {
 }
 
 async function write(data: StoredContent): Promise<void> {
-  if (hasKv()) {
-    const { kv } = await import('@vercel/kv')
-    await kv.set(KV_KEY, data)
+  if (getUpstash()) {
+    await upstashSet(KV_KEY, data)
     return
   }
-  // Local dev: file-based
+  // Local dev: file-based fallback
   const fs = await import('fs')
   const path = await import('path')
   const FILE = path.join(process.cwd(), 'data', 'content.json')
