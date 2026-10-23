@@ -694,43 +694,110 @@ function EstadosTab({ content, onSave, saving }: TabProps) {
   const stored = (content.estadosCards as Estado[]) ?? defaultEstados
   const [estados, setEstados] = useState<Estado[]>(stored)
 
+  useEffect(() => {
+    const fromKV = content.estadosCards as Estado[] | undefined
+    if (fromKV) setEstados(fromKV)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content.estadosCards])
+
+  function update(idx: number, field: keyof Estado, value: string) {
+    setEstados(prev => prev.map((e, i) => i === idx ? { ...e, [field]: value } : e))
+  }
+
+  function toggleStatus(idx: number) {
+    setEstados(prev => prev.map((e, i) => i === idx ? { ...e, status: e.status === 'ativa' ? 'em_breve' : 'ativa' } : e))
+  }
+
+  function addEstado() {
+    setEstados(prev => [...prev, { nome: '', sigla: '', foto: '', status: 'em_breve' }])
+  }
+
+  function removeEstado(idx: number) {
+    const e = estados[idx]
+    if (!confirm(`Remover "${e.nome || e.sigla || 'este estado'}"?`)) return
+    setEstados(prev => prev.filter((_, i) => i !== idx))
+  }
+
   return (
-    <Card title="Cards de Estados">
+    <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {estados.map((estado, idx) => (
-          <div key={estado.sigla} className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={estado.foto} alt={estado.nome} className="w-16 h-12 object-cover rounded-lg flex-shrink-0 mt-1" />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
-                <p className="font-bold text-gray-800 text-sm">{estado.nome}</p>
-                <span
-                  className="text-[10px] font-bold px-1.5 py-0.5 rounded text-white"
-                  style={{ background: '#007BFF' }}
-                >
-                  {estado.sigla}
-                </span>
+          <div key={idx} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            {/* Preview da imagem */}
+            {estado.foto ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={estado.foto} alt={estado.nome} className="w-full h-28 object-cover" />
+            ) : (
+              <div className="w-full h-28 bg-gray-100 flex items-center justify-center">
+                <span className="text-gray-300 text-xs">Sem imagem</span>
               </div>
-              <input
-                type="text"
-                value={estado.foto}
-                onChange={e => setEstados(prev => prev.map((e2, i) => i === idx ? { ...e2, foto: e.target.value } : e2))}
-                placeholder="URL da imagem"
-                className="w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none focus:border-blue-400 mb-2"
-              />
-              <button
-                onClick={() => setEstados(prev => prev.map((e2, i) => i === idx ? { ...e2, status: e2.status === 'ativa' ? 'em_breve' : 'ativa' } : e2))}
-                className="text-[10px] font-bold px-3 py-1 rounded-full text-white transition-all"
-                style={{ background: estado.status === 'ativa' ? '#0984e3' : '#e17055' }}
-              >
-                {estado.status === 'ativa' ? 'Ativa' : 'Em Breve'}
-              </button>
+            )}
+
+            <div className="p-4 flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Nome</label>
+                  <input
+                    type="text"
+                    value={estado.nome}
+                    onChange={e => update(idx, 'nome', e.target.value)}
+                    placeholder="ex: Acre"
+                    className="w-full text-sm border-2 border-gray-100 rounded-lg px-2 py-1.5 outline-none focus:border-blue-400"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Sigla</label>
+                  <input
+                    type="text"
+                    value={estado.sigla}
+                    onChange={e => update(idx, 'sigla', e.target.value.toUpperCase().slice(0, 2))}
+                    placeholder="ex: AC"
+                    maxLength={2}
+                    className="w-full text-sm border-2 border-gray-100 rounded-lg px-2 py-1.5 outline-none focus:border-blue-400 uppercase"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">URL da imagem</label>
+                <input
+                  type="text"
+                  value={estado.foto}
+                  onChange={e => update(idx, 'foto', e.target.value)}
+                  placeholder="https://..."
+                  className="w-full text-xs border-2 border-gray-100 rounded-lg px-2 py-1.5 outline-none focus:border-blue-400 font-mono"
+                />
+              </div>
+
+              <div className="flex items-center justify-between pt-1">
+                <button
+                  onClick={() => toggleStatus(idx)}
+                  className="text-[10px] font-bold px-3 py-1.5 rounded-full text-white transition-all"
+                  style={{ background: estado.status === 'ativa' ? '#0984e3' : '#e17055' }}
+                >
+                  {estado.status === 'ativa' ? 'Ativa' : 'Em Breve'}
+                </button>
+                <button
+                  onClick={() => removeEstado(idx)}
+                  className="text-xs text-red-400 hover:text-red-600 font-semibold transition-colors"
+                >
+                  Remover
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      <button
+        onClick={addEstado}
+        className="border-2 border-dashed border-blue-200 text-blue-500 hover:border-blue-400 hover:bg-blue-50 rounded-2xl py-4 text-sm font-semibold transition-all"
+      >
+        + Adicionar estado
+      </button>
+
       <SaveBtn onClick={() => onSave({ estadosCards: estados })} saving={saving} />
-    </Card>
+    </div>
   )
 }
 
