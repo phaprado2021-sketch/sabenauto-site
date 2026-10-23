@@ -14,10 +14,10 @@ export const metadata = {
   alternates: { canonical: 'https://sabenautopecas.com.br/ofertas' },
 }
 
-export default function OfertasPage() {
-  const ofertas = getOfertas().filter(o => o.ativo)
-  const lojas = getLojas()
-  const imagens = getImagens()
+export default async function OfertasPage() {
+  const ofertas = (await getOfertas()).filter(o => o.ativo)
+  const lojas = await getLojas()
+  const imagens = await getImagens()
 
   return (
     <main>

@@ -42,10 +42,10 @@ export const metadata: Metadata = {
   alternates: { canonical: BASE_URL },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const lojas = getLojas()
-  const siteConfig = getSiteConfig()
-  const rodape = getRodape()
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const lojas = await getLojas()
+  const siteConfig = await getSiteConfig()
+  const rodape = await getRodape()
   const lojasWA = lojas
     .filter((l): l is typeof l & { whatsapp: string } => !!l.whatsapp)
     .map(l => ({ label: l.label, whatsapp: l.whatsapp }))

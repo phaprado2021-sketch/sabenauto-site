@@ -6,12 +6,12 @@ import type { Metadata } from 'next'
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  return getLojas().map(loja => ({ slug: loja.slug }))
+  return (await getLojas()).map(loja => ({ slug: loja.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const loja = getLojas().find(l => l.slug === slug)
+  const loja = (await getLojas()).find(l => l.slug === slug)
   if (!loja) return {}
   return {
     title: `Sabenauto ${loja.cidade} – Distribuidora de Peças`,
@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LojaPage({ params }: Props) {
   const { slug } = await params
-  const lojas = getLojas()
-  const siteConfig = getSiteConfig()
+  const lojas = await getLojas()
+  const siteConfig = await getSiteConfig()
   const loja = lojas.find(l => l.slug === slug)
   if (!loja) notFound()
 

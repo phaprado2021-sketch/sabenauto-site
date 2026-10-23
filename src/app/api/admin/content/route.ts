@@ -12,12 +12,12 @@ async function isAuthenticated(): Promise<boolean> {
 
 export async function GET() {
   if (!await isAuthenticated()) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
-  return NextResponse.json(getFullContent())
+  return NextResponse.json(await getFullContent())
 }
 
 export async function POST(request: Request) {
   if (!await isAuthenticated()) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
   const updates = await request.json()
-  saveContent(updates)
+  await saveContent(updates)
   return NextResponse.json({ ok: true })
 }

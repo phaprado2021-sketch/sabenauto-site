@@ -14,9 +14,9 @@ export const metadata = {
   alternates: { canonical: 'https://sabenautopecas.com.br/varejo' },
 }
 
-export default function VarejoPage() {
-  const lojas = getLojas()
-  const imagens = getImagens()
+export default async function VarejoPage() {
+  const lojas = await getLojas()
+  const imagens = await getImagens()
   return (
     <main>
       {/* Hero */}

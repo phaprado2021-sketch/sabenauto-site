@@ -1,12 +1,8 @@
-import fs from 'fs'
-import path from 'path'
 import {
   lojas as defaultLojas,
   siteConfig as defaultSiteConfig,
   estadosCards as defaultEstados,
 } from './data'
-
-const FILE = path.join(process.cwd(), 'data', 'content.json')
 
 export type Oferta = {
   id: string
@@ -47,11 +43,7 @@ type StoredContent = {
   siteConfig?: typeof defaultSiteConfig
   lojas?: typeof defaultLojas
   estadosCards?: typeof defaultEstados
-  carrossel?: Array<{
-    id: string
-    imagem: string
-    alt: string
-  }>
+  carrossel?: Array<{ id: string; imagem: string; alt: string }>
   ofertas?: Oferta[]
   imagens?: Imagens
   rodape?: Rodape
@@ -80,8 +72,27 @@ const defaultRodape: Rodape = {
   logoBennesbyUrl: '',
 }
 
-function read(): StoredContent {
+const KV_KEY = 'sabenauto:content'
+
+function hasKv() {
+  return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
+}
+
+async function read(): Promise<StoredContent> {
+  if (hasKv()) {
+    try {
+      const { kv } = await import('@vercel/kv')
+      const data = await kv.get<StoredContent>(KV_KEY)
+      return data ?? {}
+    } catch {
+      return {}
+    }
+  }
+  // Local dev: file-based
   try {
+    const fs = await import('fs')
+    const path = await import('path')
+    const FILE = path.join(process.cwd(), 'data', 'content.json')
     if (!fs.existsSync(FILE)) return {}
     return JSON.parse(fs.readFileSync(FILE, 'utf-8'))
   } catch {
@@ -89,33 +100,42 @@ function read(): StoredContent {
   }
 }
 
-function write(data: StoredContent) {
+async function write(data: StoredContent): Promise<void> {
+  if (hasKv()) {
+    const { kv } = await import('@vercel/kv')
+    await kv.set(KV_KEY, data)
+    return
+  }
+  // Local dev: file-based
+  const fs = await import('fs')
+  const path = await import('path')
+  const FILE = path.join(process.cwd(), 'data', 'content.json')
   const dir = path.dirname(FILE)
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(FILE, JSON.stringify(data, null, 2), 'utf-8')
 }
 
-export function getFullContent(): StoredContent {
+export async function getFullContent(): Promise<StoredContent> {
   return read()
 }
 
-export function getSiteConfig() {
-  const stored = read()
+export async function getSiteConfig() {
+  const stored = await read()
   return { ...defaultSiteConfig, ...(stored.siteConfig ?? {}) }
 }
 
-export function getLojas() {
-  const stored = read()
+export async function getLojas() {
+  const stored = await read()
   return stored.lojas ?? defaultLojas
 }
 
-export function getEstadosCards() {
-  const stored = read()
+export async function getEstadosCards() {
+  const stored = await read()
   return stored.estadosCards ?? defaultEstados
 }
 
-export function getCarrossel() {
-  const stored = read()
+export async function getCarrossel() {
+  const stored = await read()
   return stored.carrossel ?? [
     { id: '1', imagem: 'https://i.postimg.cc/kgbkVyC2/distribuidora-pe-as.png', alt: 'Banner Institucional Sabenauto' },
     { id: '2', imagem: 'https://i.postimg.cc/MK4CKFCk/2distribuidora-pe-as.png', alt: 'Mês do Consumidor' },
@@ -124,22 +144,22 @@ export function getCarrossel() {
   ]
 }
 
-export function saveContent(updates: Partial<StoredContent>) {
-  const current = read()
-  write({ ...current, ...updates })
+export async function saveContent(updates: Partial<StoredContent>) {
+  const current = await read()
+  await write({ ...current, ...updates })
 }
 
-export function getOfertas(): Oferta[] {
-  const stored = read()
+export async function getOfertas(): Promise<Oferta[]> {
+  const stored = await read()
   return stored.ofertas ?? []
 }
 
-export function getImagens(): Imagens {
-  const stored = read()
+export async function getImagens(): Promise<Imagens> {
+  const stored = await read()
   return { ...defaultImagens, ...(stored.imagens ?? {}) }
 }
 
-export function getRodape(): Rodape {
-  const stored = read()
+export async function getRodape(): Promise<Rodape> {
+  const stored = await read()
   return { ...defaultRodape, ...(stored.rodape ?? {}) }
 }

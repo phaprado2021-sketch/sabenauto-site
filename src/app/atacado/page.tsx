@@ -13,9 +13,9 @@ export const metadata = {
   alternates: { canonical: 'https://sabenautopecas.com.br/atacado' },
 }
 
-export default function AtacadoPage() {
-  const lojas = getLojas()
-  const imagens = getImagens()
+export default async function AtacadoPage() {
+  const lojas = await getLojas()
+  const imagens = await getImagens()
   const lojasComWA = lojas.filter(l => l.whatsapp)
   const lojasSemWA = lojas.filter(l => !l.whatsapp)
 

@@ -7,13 +7,13 @@ export const dynamic = 'force-dynamic'
 
 export default async function OfertasLojaPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const lojas = getLojas()
+  const lojas = await getLojas()
   const loja = lojas.find(l => l.slug === slug)
 
   if (!loja) notFound()
 
-  const ofertas = getOfertas().filter(o => o.ativo && o.lojaSlug === slug)
-  const imagens = getImagens()
+  const ofertas = (await getOfertas()).filter(o => o.ativo && o.lojaSlug === slug)
+  const imagens = await getImagens()
 
   return (
     <main>

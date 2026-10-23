@@ -16,10 +16,10 @@ export const metadata = {
   description: 'Peças genuínas GM e ACDelco com mais de 50 anos de tradição. Presente em Acre, Amazonas, Ceará, Mato Grosso, Rio de Janeiro, Rondônia e Distrito Federal.',
 }
 
-export default function Home() {
-  const slides = getCarrossel()
-  const lojas = getLojas()
-  const imagens = getImagens()
+export default async function Home() {
+  const slides = await getCarrossel()
+  const lojas = await getLojas()
+  const imagens = await getImagens()
 
   return (
     <main>

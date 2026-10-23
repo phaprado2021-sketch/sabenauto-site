@@ -3,8 +3,8 @@ import { getLojas } from '@/lib/contentStore'
 
 const BASE_URL = 'https://sabenautopecas.com.br'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const lojas = getLojas()
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const lojas = await getLojas()
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
