@@ -1,0 +1,62 @@
+{
+  "imagens": {
+    "heroVarejoUrl": "https://i.postimg.cc/1tk4yJvP/fundo.png",
+    "heroAtacadoUrl": "https://i.postimg.cc/1tk4yJvP/fundo.png",
+    "heroOfertasUrl": "https://i.postimg.cc/1tk4yJvP/fundo.png",
+    "logoUrl": "https://sabenautopecas.com.br/wp-content/uploads/2025/08/SABENAUTO-DISTRIBUIDORA-DE-PECAS.png",
+    "homeVarejoUrl": "https://www.pecachevrolet.com.br/img/homepage/cards/card-concessionarias.webp",
+    "homeAtacadoUrl": "https://www.pecachevrolet.com.br/img/homepage/cards/card-kits.webp",
+    "homeOfertasUrl": "https://www.pecachevrolet.com.br/img/homepage/cards/card-dropshipping.webp",
+    "quemSomosUrl": "https://www.pecachevrolet.com.br/img/homepage/sobre-nos/sobre-nos-mid-image2.jpg"
+  },
+  "ofertas": [
+    {
+      "id": "1792609231447",
+      "lojaSlug": "sabenauto-porto-velho",
+      "lojaNome": "Porto Velho - RO",
+      "titulo": "PASTILHA DE FREIO",
+      "descricao": "NOVO ONIX",
+      "imagem": "https://i.postimg.cc/nV1tF3RX/d8b03365-c25f-42f6-92fd-eefe87c86c7b.jpg",
+      "preco": "102,90",
+      "validade": "31/10/2026",
+      "ativo": true
+    }
+  ],
+  "carrossel": [
+    {
+      "id": "4",
+      "imagem": "https://www.pecachevrolet.com.br/img/homepage/banners/banner_out_desktop3.webp",
+      "alt": "Frete Gratis"
+    },
+    {
+      "id": "1792729114951",
+      "imagem": "https://www.pecachevrolet.com.br/img/homepage/banners/banner_acdelco_desktop_out.webp",
+      "alt": "Oferta do Mes Acdelco 2"
+    },
+    {
+      "id": "1792731259887",
+      "imagem": "https://www.pecachevrolet.com.br/img/homepage/banners/banner_genuineparts_desktop.webp",
+      "alt": "PEÇAS"
+    },
+    {
+      "id": "1792731283998",
+      "imagem": "https://www.pecachevrolet.com.br/img/homepage/banners/banner_acdelco_desktop.webp",
+      "alt": "ACDELCO"
+    }
+  ],
+  "rodape": {
+    "slogan": "A peca que falta para o sucesso da sua oficina!",
+    "grupo": "BENNESBY",
+    "copyright": "Copyright 2026 Sabenauto Distribuidora de Pecas",
+    "devText": "By Negócios Digitais - BackOffice Grupo Bennesby - SITE DITRIBUIDORA DE PEÇAS V2",
+    "links": [
+      {
+        "id": "1",
+        "label": "Veja as Vagas Disponiveis",
+        "url": "https://www.linkedin.com/company/grupo-bennesby/jobs/?viewAsMember=true"
+      }
+    ],
+    "logoSabenautoUrl": "https://i.postimg.cc/sfGyvMyn/SABENAUTO-HORIZONTAL-PRETA.png",
+    "logoBennesbyUrl": "https://i.postimg.cc/zXWJPVcC/LOGO.png"
+  }
+}

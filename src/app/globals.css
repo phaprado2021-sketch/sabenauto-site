@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #007BFF;
+  --primary-dark: #0056b3;
+  --primary-light: #74b9ff;
+  --bg: #f8f9fa;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-poppins), 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: #2c3e50;
+  overflow-x: hidden;
+}
+
+/* ── Scroll fade-in ───────────────────────────────── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-in.fade-in--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: -200% 0; }
+  50% { background-position: 200% 0; }
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.card-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #74b9ff, #0984e3, #74b9ff);
+  background-size: 200% 100%;
+  border-radius: inherit;
+  animation: shimmer 3s ease-in-out infinite;
+}
