@@ -78,9 +78,9 @@ export default async function VarejoPage() {
                 desc: 'Retire imediatamente com qualidade garantida, nota fiscal e suporte pós-venda da Sabenauto.',
               },
             ].map(item => (
-              <div key={item.step} className="flex flex-col items-center text-center gap-5 relative">
+              <div key={item.step} className="group flex flex-col items-center text-center gap-5 relative cursor-default">
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl text-white flex-shrink-0 relative z-10"
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl text-white flex-shrink-0 relative z-10 group-hover:scale-110 group-hover:shadow-lg transition-all duration-300"
                   style={{ background: 'linear-gradient(135deg, #007BFF, #0056b3)' }}
                 >
                   {item.step}
@@ -103,10 +103,10 @@ export default async function VarejoPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {lojas.map(loja => (
-              <div key={loja.key} className="bg-white rounded-2xl p-6 flex flex-col gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-all">
+              <div key={loja.key} className="group bg-white rounded-2xl p-6 flex flex-col gap-4 shadow-sm border border-gray-100 hover:-translate-y-2 hover:shadow-xl hover:border-blue-100 transition-all duration-300">
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
                     style={{ background: '#007BFF' }}
                   >
                     <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

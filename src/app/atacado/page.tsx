@@ -96,10 +96,10 @@ export default async function AtacadoPage() {
             ].map(item => (
               <div
                 key={item.title}
-                className="flex flex-col items-center text-center gap-4 p-7 rounded-2xl border border-gray-100 bg-gray-50"
+                className="group flex flex-col items-center text-center gap-4 p-7 rounded-2xl border border-gray-100 bg-gray-50 hover:-translate-y-2 hover:shadow-xl hover:border-blue-100 transition-all duration-300 cursor-default"
               >
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-white flex-shrink-0"
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-white flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
                   style={{ background: 'linear-gradient(135deg, #007BFF, #0056b3)' }}
                 >
                   {item.icon}
@@ -122,7 +122,7 @@ export default async function AtacadoPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {lojasComWA.map(loja => (
-              <div key={loja.key} className="bg-white rounded-2xl p-6 flex flex-col gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-all">
+              <div key={loja.key} className="group bg-white rounded-2xl p-6 flex flex-col gap-4 shadow-sm border border-gray-100 hover:-translate-y-2 hover:shadow-xl hover:border-blue-100 transition-all duration-300">
                 <div className="flex items-center gap-3">
                   <div
                     className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
