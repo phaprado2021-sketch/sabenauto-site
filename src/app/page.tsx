@@ -7,7 +7,7 @@ import QuemSomos from '@/components/QuemSomos'
 import BannerEstados from '@/components/BannerEstados'
 import FadeIn from '@/components/FadeIn'
 import Link from 'next/link'
-import { getCarrossel, getLojas, getImagens } from '@/lib/contentStore'
+import { getCarrossel, getLojas, getImagens, getEstadosCards } from '@/lib/contentStore'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,6 +20,7 @@ export default async function Home() {
   const slides = await getCarrossel()
   const lojas = await getLojas()
   const imagens = await getImagens()
+  const estadosCards = await getEstadosCards()
 
   return (
     <main>
@@ -27,7 +28,7 @@ export default async function Home() {
       <Carrossel slides={slides} />
 
       {/* 2. Cards de estados — FadeIn interno (stagger por item) */}
-      <CardsEstados />
+      <CardsEstados estadosCards={estadosCards} />
 
       {/* 3. Vantagens — FadeIn interno (stagger por card) */}
       <Vantagens />

@@ -1,8 +1,8 @@
 'use client'
-import { estadosCards } from '@/lib/data'
+import type { EstadoCard } from '@/lib/data'
 import FadeIn from './FadeIn'
 
-export default function CardsEstados() {
+export default function CardsEstados({ estadosCards }: { estadosCards: EstadoCard[] }) {
   return (
     <section className="py-14" style={{ background: '#f0f4f8' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
