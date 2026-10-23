@@ -127,17 +127,30 @@ async function read(): Promise<StoredContent> {
 }
 
 async function write(data: StoredContent): Promise<void> {
-  if (getUpstash()) {
-    await upstashSet(KV_KEY, data)
+  const creds = getUpstash()
+  if (creds) {
+    const res = await fetch(`${creds.url}/set/${encodeURIComponent(KV_KEY)}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${creds.token}`, 'Content-Type': 'text/plain' },
+      body: JSON.stringify(data),
+    })
+    if (!res.ok) {
+      const body = await res.text()
+      throw new Error(`Upstash error ${res.status}: ${body}`)
+    }
     return
   }
   // Local dev: file-based fallback
-  const fs = await import('fs')
-  const path = await import('path')
-  const FILE = path.join(process.cwd(), 'data', 'content.json')
-  const dir = path.dirname(FILE)
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-  fs.writeFileSync(FILE, JSON.stringify(data, null, 2), 'utf-8')
+  try {
+    const fs = await import('fs')
+    const path = await import('path')
+    const FILE = path.join(process.cwd(), 'data', 'content.json')
+    const dir = path.dirname(FILE)
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+    fs.writeFileSync(FILE, JSON.stringify(data, null, 2), 'utf-8')
+  } catch {
+    throw new Error('Sem KV configurado e filesystem indisponível (ambiente serverless). Configure KV_REST_API_URL e KV_REST_API_TOKEN.')
+  }
 }
 
 export async function getFullContent(): Promise<StoredContent> {

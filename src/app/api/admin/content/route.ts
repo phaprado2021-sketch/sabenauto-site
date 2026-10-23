@@ -17,7 +17,12 @@ export async function GET() {
 
 export async function POST(request: Request) {
   if (!await isAuthenticated()) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
-  const updates = await request.json()
-  await saveContent(updates)
-  return NextResponse.json({ ok: true })
+  try {
+    const updates = await request.json()
+    await saveContent(updates)
+    return NextResponse.json({ ok: true })
+  } catch (e) {
+    console.error('[admin/content POST]', e)
+    return NextResponse.json({ error: String(e) }, { status: 500 })
+  }
 }
