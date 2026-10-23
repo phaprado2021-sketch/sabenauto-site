@@ -49,56 +49,46 @@ export default async function VarejoPage() {
       </section>
 
       {/* Como funciona o balcão */}
-      <section className="py-14 bg-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-1 text-center" style={{ color: '#007BFF' }}>Como funciona o balcão</h2>
-          <p className="text-gray-400 text-sm text-center mb-12">Simples, rápido e sem burocracia</p>
+          <p className="text-gray-400 text-sm text-center mb-14">Simples, rápido e sem burocracia</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
+            {/* Linha conectora — só desktop */}
+            <div
+              className="hidden md:block absolute top-7 left-0 right-0 h-px"
+              style={{ background: 'linear-gradient(90deg, transparent 8%, #dbeafe 20%, #dbeafe 80%, transparent 92%)' }}
+            />
+
             {[
               {
-                label: 'PASSO 01',
-                icon: (
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
-                  </svg>
-                ),
+                step: '01',
                 title: 'Encontre a Loja',
                 desc: 'Escolha a unidade Sabenauto mais próxima de você. Temos balcões em 7 estados brasileiros.',
               },
               {
-                label: 'PASSO 02',
-                icon: (
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35" />
-                  </svg>
-                ),
+                step: '02',
                 title: 'Informe a Peça',
                 desc: 'Leve o código da peça ou o modelo e ano do veículo. Nossa equipe identifica o item certo para você.',
               },
               {
-                label: 'PASSO 03',
-                icon: (
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                ),
+                step: '03',
                 title: 'Leve na Hora',
                 desc: 'Retire imediatamente com qualidade garantida, nota fiscal e suporte pós-venda da Sabenauto.',
               },
             ].map(item => (
-              <div key={item.label} className="bg-gray-50 rounded-2xl p-6 flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: '#007BFF' }}
-                  >
-                    {item.icon}
-                  </div>
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{item.label}</span>
+              <div key={item.step} className="flex flex-col items-center text-center gap-5 relative">
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl text-white flex-shrink-0 relative z-10"
+                  style={{ background: 'linear-gradient(135deg, #007BFF, #0056b3)' }}
+                >
+                  {item.step}
                 </div>
-                <h3 className="font-black text-gray-900 text-xl leading-tight">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                <div>
+                  <h3 className="font-bold text-gray-900 text-base mb-2">{item.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>

@@ -50,17 +50,16 @@ export default async function AtacadoPage() {
       </section>
 
       {/* Por que comprar no atacado */}
-      <section className="py-14 bg-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-1 text-center" style={{ color: '#007BFF' }}>Por que comprar no atacado?</h2>
           <p className="text-gray-400 text-sm text-center mb-12">Vantagens exclusivas para distribuidores e revendas</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                label: 'PREÇO',
                 icon: (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-white">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7">
                     <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
                   </svg>
                 ),
@@ -68,9 +67,8 @@ export default async function AtacadoPage() {
                 desc: 'Quanto mais você compra, melhor o preço. Tabelas escalonadas para cada perfil de revenda.',
               },
               {
-                label: 'SUPORTE',
                 icon: (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-white">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7">
                     <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
                   </svg>
                 ),
@@ -78,9 +76,8 @@ export default async function AtacadoPage() {
                 desc: 'Equipe especializada para identificar a peça certa e dar suporte na aplicação correta.',
               },
               {
-                label: 'LOGÍSTICA',
                 icon: (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-white">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7">
                     <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 4v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
                   </svg>
                 ),
@@ -88,9 +85,8 @@ export default async function AtacadoPage() {
                 desc: 'Logística integrada para distribuição em todo o Brasil com rastreamento e agilidade.',
               },
               {
-                label: 'PAGAMENTO',
                 icon: (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-white">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7">
                     <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
                   </svg>
                 ),
@@ -98,18 +94,20 @@ export default async function AtacadoPage() {
                 desc: 'Condições de pagamento facilitadas para distribuidores e revendas cadastradas na Sabenauto.',
               },
             ].map(item => (
-              <div key={item.title} className="bg-gray-50 rounded-2xl p-6 flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: '#007BFF' }}
-                  >
-                    {item.icon}
-                  </div>
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{item.label}</span>
+              <div
+                key={item.title}
+                className="flex flex-col items-center text-center gap-4 p-7 rounded-2xl border border-gray-100 bg-gray-50"
+              >
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-white flex-shrink-0"
+                  style={{ background: 'linear-gradient(135deg, #007BFF, #0056b3)' }}
+                >
+                  {item.icon}
                 </div>
-                <h3 className="font-black text-gray-900 text-xl leading-tight">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed flex-1">{item.desc}</p>
+                <div>
+                  <h3 className="font-bold text-gray-900 text-base mb-2">{item.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
