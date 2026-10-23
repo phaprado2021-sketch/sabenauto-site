@@ -33,7 +33,7 @@ export default async function Home() {
       <Vantagens />
 
       {/* 4. Catálogo de peças — FadeIn interno */}
-      <CatalogoPecas />
+      <CatalogoPecas lojas={lojas} />
 
       {/* 5. Varejo / Atacado / Ofertas */}
       <section className="py-10 sm:py-14 bg-white">

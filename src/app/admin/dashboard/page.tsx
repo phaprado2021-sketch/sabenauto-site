@@ -550,6 +550,12 @@ function LojasTab({ content, onSave, saving }: TabProps) {
   const stored = (content.lojas as Loja[]) ?? defaultLojas
   const [lojas, setLojas] = useState<Loja[]>(stored)
 
+  useEffect(() => {
+    const fromKV = content.lojas as Loja[] | undefined
+    if (fromKV) setLojas(fromKV)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content.lojas])
+
   function update(idx: number, field: string, value: string | null) {
     setLojas(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value || null } : l))
   }

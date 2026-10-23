@@ -1,12 +1,13 @@
 'use client'
 import { useState } from 'react'
 import Image from 'next/image'
-import { pecas, lojas } from '@/lib/data'
+import { pecas } from '@/lib/data'
+import type { Loja } from '@/lib/data'
 import FadeIn from './FadeIn'
 
 const LIMITE_INICIAL = 6
 
-export default function CatalogoPecas() {
+export default function CatalogoPecas({ lojas }: { lojas: Loja[] }) {
   const [expandido, setExpandido] = useState(false)
   const [pecaAberta, setPecaAberta] = useState<typeof pecas[0] | null>(null)
 
