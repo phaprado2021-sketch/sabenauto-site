@@ -4,7 +4,7 @@ async function sha256(text: string): Promise<string> {
 }
 
 export async function generateSessionToken(): Promise<string> {
-  const secret = process.env.ADMIN_SESSION_SECRET ?? 'sabenauto-secret'
+  const secret = process.env.ADMIN_SESSION_SECRET ?? 'fallback-session-key'
   const password = process.env.ADMIN_PASSWORD ?? ''
   return sha256(`${password}:${secret}:admin-session`)
 }

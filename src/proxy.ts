@@ -13,7 +13,7 @@ export async function proxy(request: NextRequest) {
     const cookie = request.cookies.get('admin-session')?.value
     if (!cookie) return NextResponse.redirect(new URL('/admin', request.url))
 
-    const secret = process.env.ADMIN_SESSION_SECRET ?? 'sabenauto-secret'
+    const secret = process.env.ADMIN_SESSION_SECRET ?? 'fallback-session-key'
     const password = process.env.ADMIN_PASSWORD ?? ''
 
     if (!password) return NextResponse.redirect(new URL('/admin', request.url))

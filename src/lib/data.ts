@@ -172,4 +172,4 @@ export const pecas: Peca[] = [
   { categoria: 'VIDROS', imagem: 'https://ik.imagekit.io/ab3nu4cvebb/categorias/categoriaVidros3.jpg' },
 ]
 
-export const GOOGLE_MAPS_API_KEY = 'AIzaSyAeY2ic1Fcq-nENw_Si_1RyRz9ExhOWFXE'
+export const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''
